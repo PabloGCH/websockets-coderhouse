@@ -11,14 +11,6 @@ class Container {
 		}
 		catch(err) {
 			console.log(err);
-			console.log("Failed to load file, creating new one");
-			/*
-			let file = {
-				lastId: 0,
-				products: []
-			};
-			this.writeFile(file);
-			*/
 		}
 	}
 	async writeFile(file) {

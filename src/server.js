@@ -2,6 +2,7 @@
 const express = require("express");
 const path = require("path");
 const Container = require("./container.js");
+const MessageManager = require("./messageManager.js");
 const {Server: IOServer} = require("socket.io");
 const {Server: HttpServer} = require("http");
 //GLOBAL VARIABLES
@@ -10,9 +11,9 @@ const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer)
 const TEMPLATEFOLDER = path.join(__dirname, "public/templates");
 const container = new Container("products.json");
+const messageManager = new MessageManager("message-history.json");
 //HANDLEBARS
 const HANDLEBARS = require("express-handlebars");
-const { emit } = require("process");
 app.engine("handlebars", HANDLEBARS.engine())
 app.set("views", TEMPLATEFOLDER)
 app.set("view engine", "handlebars")
@@ -32,12 +33,22 @@ io.on("connection", (socket) => {
 	container.getAll().then(products => {
 		socket.emit("products", {products: products})
 	})
+	messageManager.getAll().then(messages => {
+		socket.emit("messages", {messages: messages})
+	})
 	socket.on("newProduct", data => {
 		let product = data;
 		Object.assign(product, {price: parseInt(product.price)});
 		container.save(product).then(() => {
 			container.getAll().then(products => {
-				socket.emit("products", {products: products})
+				io.sockets.emit("products", {products: products})
+			})
+		})
+	})
+	socket.on("newMessage", data => {
+		messageManager.save(data).then(() => {
+			messageManager.getAll().then(messages => {
+				io.sockets.emit("messages", messages)
 			})
 		})
 	})
