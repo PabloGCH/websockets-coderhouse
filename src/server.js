@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
 	socket.on("newMessage", data => {
 		messageManager.save(data).then(() => {
 			messageManager.getAll().then(messages => {
-				io.sockets.emit("messages", messages)
+				io.sockets.emit("messages", {messages: messages})
 			})
 		})
 	})

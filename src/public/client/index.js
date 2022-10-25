@@ -31,6 +31,9 @@ const productFormSubmit = () => {
 		imgUrl: inputs[2].value
 	};
 	socket.emit("newProduct", newProduct)
+	setTimeout(() => {
+		window.location.replace("stock")
+	}, 500)
 }
 
 const chatSection = async(data, user) => {
@@ -74,6 +77,8 @@ if(window.location.pathname == "/chat") {
 		chatSection(data, currentUserEmail).then(res => {
 			content.innerHTML = res;
 			document.getElementById("email").value = currentUserEmail;
+			let messageBox = document.getElementById("message-box");
+			messageBox.scrollTop = messageBox.scrollHeight;
 		})
 	})
 }

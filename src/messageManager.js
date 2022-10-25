@@ -39,9 +39,13 @@ class MessageManager {
 				date: object.date,
 				message: object.message
 			};
-			file.push(newObject);
-			this.writeFile(file);
-			return newObject;
+			if(newObject.message && newObject.email) {
+				file.push(newObject);
+				this.writeFile(file);
+				return newObject;
+			} else {
+				throw("There was no message")
+			}
 		}
 		catch(err) {
 			if(err) {
