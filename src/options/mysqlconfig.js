@@ -2,8 +2,10 @@ const options = {
 	client: "mysql",
 	connection: {
 		host: "127.0.0.1",
-		users: "root",
+		user: "root",
 		password: "",
 		database: "coderDb"
 	}
 }
+
+module.exports = options;
