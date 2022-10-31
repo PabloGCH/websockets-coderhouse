@@ -2,8 +2,7 @@
 const options = require("../options/mysqlconfig.js");
 const knex = require("knex");
 const database = knex(options);
-
-
+//crear tabla si no existe
 database.schema.hasTable("products").then(exists => {
 	if(!exists) {
 		database.schema.createTable("products", table => {
@@ -29,8 +28,59 @@ const product = [{
 	price: 15
 }]
 
-database("product").insert(product)
+database("products").insert(product)
 .then(() => console.log("products added"))
 .catch((err) => console.log(err))
 .finally(() => database.destroy());
 */
+// Conseguir productos
+/*
+const products = [];
+database.from("products").select("*")
+.then((result) => {
+	products.push(result)
+})
+.catch((err) => console.log(err))
+.finally(() => {
+	products.forEach(el => {
+		el.forEach(p => {
+			console.log({...p})
+		})
+	})
+});
+*/
+/*
+// Conseguir producto
+const products = [];
+database.from("products").select("*").where("id", 2)
+.then((result) => {
+	products.push(result)
+})
+.catch((err) => console.log(err))
+.finally(() => {
+	products.forEach(el => {
+		el.forEach(p => {
+			console.log({...p})
+		})
+	})
+});
+*/
+/*
+// Actualizar producto
+database.from("products").where("id", 2).update({price: 76})
+.then(() => console.log("product updated"))
+.catch((err) => console.log(err))
+.finally(() => database.destroy());
+*/
+/*
+// Eliminar producto
+database.from("products").where("id", 2).del()
+.then(() => console.log("product deleted"))
+.catch((err) => console.log(err))
+.finally(() => database.destroy());
+*/
+
+
+
+
+
