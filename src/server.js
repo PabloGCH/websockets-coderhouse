@@ -1,8 +1,8 @@
 // IMPORTS
 const express = require("express");
 const path = require("path");
-const Container = require("./container.js");
-const MessageManager = require("./messageManager.js");
+const ProductDbManager = require("./managers/productsDbManager.js");
+const MessageDbManager = require("./managers/messageDbManager.js");
 const {Server: IOServer} = require("socket.io");
 const {Server: HttpServer} = require("http");
 //GLOBAL VARIABLES
@@ -10,8 +10,8 @@ const app= express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer)
 const TEMPLATEFOLDER = path.join(__dirname, "public/templates");
-const container = new Container("products.json");
-const messageManager = new MessageManager("message-history.json");
+const container = new ProductDbManager("products.json");
+const messageManager = new MessageDbManager("message-history.json");
 //HANDLEBARS
 const HANDLEBARS = require("express-handlebars");
 app.engine("handlebars", HANDLEBARS.engine())

@@ -2,7 +2,8 @@
   "name": "websockets-coderhouse",
   "version": "1.0.0",
   "description": "",
-  "main": "container.js",
+  "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "nodemon src/server.js",
     "start": "node src/server.js"

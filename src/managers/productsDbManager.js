@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class Container {
+class ProductDbManager {
 	constructor(fileDir) {
 		this.fileDir = fileDir;
 	}
@@ -135,4 +135,4 @@ class Container {
 	}
 }
 
-module.exports = Container;
+module.exports = ProductDbManager;

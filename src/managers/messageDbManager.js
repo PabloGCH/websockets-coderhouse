@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-class MessageManager {
+class MessageDbManager {
 
 	constructor(fileDir) {
 		this.fileDir = fileDir;
@@ -56,4 +56,4 @@ class MessageManager {
 	}
 }
 
-module.exports = MessageManager;
+module.exports = MessageDbManager;
