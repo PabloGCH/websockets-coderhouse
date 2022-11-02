@@ -5,8 +5,6 @@ const ProductDbManager = require("./managers/productsDbManager.js");
 const MessageDbManager = require("./managers/messageDbManager.js");
 const {Server: IOServer} = require("socket.io");
 const {Server: HttpServer} = require("http");
-//DATABASE
-const table = require("./scripts/productTable.js")
 
 //GLOBAL VARIABLES
 const app= express();
