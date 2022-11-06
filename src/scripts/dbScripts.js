@@ -1,5 +1,4 @@
 //BASE DE DATOS
-//const options = require("../options/mysqlconfig.js");
 const knex = require("knex");
 
 const sqliteconfig = require("../options/sqliteconfig");
@@ -25,13 +24,25 @@ class DbManager {
 	createTable() {
 		this.database.schema.hasTable(this.tableName).then(exists => {
 			if(!exists) {
-				this.database.schema.createTable("products", table => {
-					table.increments("id");
-					table.string("name", 20);
-					table.integer("price").nullable(true);
-					table.string("imgUrl", 200);
-				})
-				.then(() => console.log(`${this.tableName} table created`))
+				switch(this.tableName) {
+					case "products":
+						this.database.schema.createTable(this.tableName, table => {
+							table.increments("id");
+							table.string("name", 20);
+							table.integer("price").nullable(true);
+							table.string("imgUrl", 1500);
+						})
+						.then(() => console.log(`${this.tableName} table created`))
+						break;
+					case "messages":
+						this.database.schema.createTable(this.tableName, table => {
+							table.string("email", 40);
+							table.string("date", 70);
+							table.string("message", 500);
+						})
+						.then(() => console.log(`${this.tableName} table created`))
+						break;
+				}
 			}
 		})
 		.catch(err => console.log(err))
@@ -95,16 +106,5 @@ class DbManager {
 		})
 	}
 }
-
-/*
-// Actualizar producto
-
-*/
-/*
-// Eliminar producto
-
-*/
-
-
 
 module.exports = DbManager;

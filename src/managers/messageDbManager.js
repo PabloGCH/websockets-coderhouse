@@ -1,10 +1,14 @@
 const fs = require('fs');
+const DbManager = require("../scripts/dbScripts");
+
 
 class MessageDbManager {
 
 	constructor(fileDir) {
 		this.fileDir = fileDir;
+		this.dbManager = new DbManager("messages");
 	}
+	/*
 	async readFile() {
 		try {
 			return JSON.parse(await fs.promises.readFile(this.fileDir, "utf-8"));
@@ -13,16 +17,23 @@ class MessageDbManager {
 			console.log(err);
 		}
 	}
+	*/
 	async getAll() {
 		try {
-			let file = await this.readFile();
-			return file;
+			//let file = await this.readFile();
+			let answer = await this.dbManager.getObjects()
+			if(answer.success) {
+				return answer.response
+			} else {
+				throw answer.response
+			}
 		}
-		catch {
-			console.log("Failed to get objects")
+		catch(err) {
+			console.log(err);
 			return false;
 		}
 	}
+	/*
 	async writeFile(file) {
 		try {
 			await fs.promises.writeFile(this.fileDir, JSON.stringify(file, null, "	"));
@@ -31,17 +42,16 @@ class MessageDbManager {
 			console.log("Failed to write file")
 		}
 	}
+	*/
 	async save(object) {
 		try {
-			let file = await this.readFile();
 			let newObject = {
 				email: object.email,
 				date: object.date,
 				message: object.message
 			};
 			if(newObject.message && newObject.email) {
-				file.push(newObject);
-				this.writeFile(file);
+				this.dbManager.addObject(newObject);
 				return newObject;
 			} else {
 				throw("There was no message")
